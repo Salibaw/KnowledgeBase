@@ -13,12 +13,12 @@ class AssignmentController extends Controller
     public function index()
     {
         // Mengambil tiket yang ditugaskan ke teknisi yang sedang login
-        $assignments = Ticket::where('technician_id', Auth::id())
+        $assignments = Ticket::where('user_id', Auth::id())
             ->whereIn('status', ['processing', 'resolved'])
             ->latest()
             ->paginate(10);
             
-        return view('teknisi.assignments.index', compact('assignments'));
+        return view('teknisi.assignment.index', compact('assignments'));
     }
 
     public function solve(Request $request, $id)

@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('assignments', function (Blueprint $table) {
             $table->id('assignment_id'); // Primary Key 
             $table->foreignId('ticket_id')->constrained('tickets', 'ticket_id');
-            $table->foreignId('user_id')->constrained('users', 'user_id'); // ID Teknisi 
+             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->timestamp('assigned_at'); // Waktu penugasan 
             $table->timestamps();
         });

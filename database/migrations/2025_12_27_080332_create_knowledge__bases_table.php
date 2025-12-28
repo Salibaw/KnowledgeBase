@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('solution');
             $table->text('cleaned_text');
             $table->json('vector_weights')->nullable(); 
-            $table->text('keyword');
+            $table->text('keyword')->nullable();
             $table->boolean('is_verified')->default(false); 
             $table->timestamps();
         });

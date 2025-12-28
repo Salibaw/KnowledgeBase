@@ -32,11 +32,11 @@ class DashboardController extends Controller
         $userId = Auth::id();
 
         $data = [
-            'tugas_baru'    => Ticket::where('technician_id', $userId)->where('status', 'processing')->count(),
-            'tugas_selesai' => Ticket::where('technician_id', $userId)->where('status', 'resolved')->count(),
+            'tugas_baru'    => Ticket::where('user_id', $userId)->where('status', 'processing')->count(),
+            'tugas_selesai' => Ticket::where('user_id', $userId)->where('status', 'resolved')->count(),
             // Mengambil 5 tugas terakhir yang belum selesai
             'active_tasks'  => Ticket::with('user')
-                                ->where('technician_id', $userId)
+                                ->where('user_id', $userId)
                                 ->where('status', 'processing')
                                 ->latest()
                                 ->take(5)

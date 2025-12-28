@@ -12,13 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('tickets', function (Blueprint $table) {
-            $table->id('ticket_id'); 
-            $table->foreignId('user_id')->constrained('users', 'user_id');
+            $table->id('ticket_id');
+            $table->string('ticket_code')->unique();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('category_id')->constrained('categories', 'category_id');
             $table->string('title');
-            $table->text('description'); 
-            $table->enum('status', ['terbuka', 'diproses', 'selesai'])->default('terbuka'); 
-            $table->enum('priority', ['low', 'medium', 'high']); 
+            $table->text('description');
+            $table->enum('status', ['terbuka', 'diproses', 'selesai'])->default('terbuka');
+            $table->enum('priority', ['low', 'medium', 'high']);
             $table->timestamps();
         });
     }

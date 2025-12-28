@@ -7,6 +7,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\KnowledgeBaseController;
 use App\Http\Controllers\admin\TicketController;
+use App\Http\Controllers\AssignmentController;
 
 
 /*
@@ -53,13 +54,13 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
 
 Route::middleware(['auth', 'role:teknisi'])->prefix('teknisi')->name('teknisi.')->group(function () {
     // Dashboard Teknisi
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'teknisi'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'teknisi'])->name('dashboard');
     // Kelola Tugas (index & solve)
-    Route::get('/assignments', [App\Http\Controllers\AssignmentController::class, 'index'])->name('assignments.index');
-    Route::post('/assignments/{id}/solve', [App\Http\Controllers\AssignmentController::class, 'solve'])->name('assignments.solve');
+    Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
+    Route::post('/assignments/{id}/solve', [AssignmentController::class, 'solve'])->name('assignments.solve');
 });
 Route::middleware(['auth', 'role:pelanggan'])->prefix('user')->name('user.')->group(function () {
-    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route Tiket Pelanggan
     Route::get('/tickets', [TicketController::class, 'pelanggan'])->name('tickets.index');
     Route::get('/tickets/create', [TicketController::class, 'create_pelanggan'])->name('tickets.create');

@@ -35,6 +35,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Assignment::class, 'user_id');
     }
+    public function logHistories(): HasMany
+    {
+        return $this->hasMany(LogHistory::class, 'user_id');
+    }
     /**
      * The attributes that should be hidden for serialization.
      *

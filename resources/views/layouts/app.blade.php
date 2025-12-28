@@ -91,7 +91,7 @@
 
                 @if(Auth::user()->role == 'teknisi')
                 <div x-show="sidebarOpen" class="text-[10px] uppercase text-slate-500 font-bold px-4 pt-6 pb-2 tracking-widest">Workspace</div>
-                <a href="{{ route('assignments.index') }}"
+                <a href="{{ route('teknisi.assignments.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('assignments.*') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}"
                     :class="sidebarOpen ? '' : 'justify-center'">
                     <i class="fas fa-clipboard-list w-6"></i>
