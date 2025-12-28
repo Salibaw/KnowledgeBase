@@ -4,28 +4,30 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Auth;
 
 class RoleMiddleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next, ...$roles)
+    public function handle(Request $request, Closure $next, string $role)
     {
-        // Cek apakah user sudah login
-        if (!auth()->check()) {
-            return redirect('login');
+        if (!Auth::check()) {
+            abort(403, 'Unauthorized - Not logged in');
         }
 
-        // Cek apakah role user ada dalam parameter yang diizinkan
-        if (in_array(auth()->user()->role, $roles)) {
-            return $next($request);
+        $user = Auth::user();
+
+        // Langsung ambil dari kolom role (string)
+        $userRole = $user->role; // ← ini string 'admin', 'teknisi', atau 'pelanggan'
+
+        if (!$userRole) {
+            abort(403, 'Unauthorized - User has no role');
         }
 
-        // Jika tidak punya akses, arahkan kembali atau beri error 403
-        abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+        // Case-insensitive comparison
+        if (strtolower($userRole) !== strtolower($role)) {
+            abort(403, "Unauthorized - Role mismatch. You are: {$userRole}");
+        }
+
+        return $next($request);
     }
 }

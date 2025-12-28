@@ -9,14 +9,14 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
+    public function up()
     {
         Schema::create('log_histories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users', 'user_id');
-            $table->string('activity'); 
-            $table->timestamp('login_at')->nullable(); 
-            $table->timestamp('logout_at')->nullable(); 
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('activity'); // Contoh: "Menambah User", "Verifikasi Solusi"
+            $table->string('description')->nullable(); // Detail tambahan
+            $table->string('ip_address')->nullable();
             $table->timestamps();
         });
     }

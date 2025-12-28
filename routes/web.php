@@ -3,10 +3,10 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LandingController;
-use App\Http\Controllers\admin\DashboardController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\admin\KnowledgeBaseController;
-use App\Http\Controllers\admin\TicketController as AdminTicketController;
+use App\Http\Controllers\admin\TicketController;
 
 
 /*
@@ -31,25 +31,41 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     // Dashboard Admin
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
-
+    Route::get('/dashboard', [DashboardController::class, 'admin'])->name('dashboard');
     // Manajemen User (CRUD)
     Route::resource('users', UserController::class);
-
     // Log History
-    Route::get('/logs', [UserController::class, 'logs'])->name('logs.index');
-
+    Route::get('/logs', function () {
+        $logs = \App\Models\LogHistory::with('user')->latest()->paginate(20);
+        return view('admin.logs.index', compact('logs'));
+    })->name('logs.index');
     // Manajemen Tiket
-    Route::get('/tickets', [AdminTicketController::class, 'index'])->name('tickets.index');
-    Route::get('/tickets/{id}', [AdminTicketController::class, 'show'])->name('tickets.show');
-    Route::post('/tickets/{id}/assign', [AdminTicketController::class, 'assign'])->name('tickets.assign');
-    Route::delete('/tickets/{id}', [AdminTicketController::class, 'destroy'])->name('tickets.destroy');
-
+    Route::get('/tickets', [TicketController::class, 'index'])->name('tickets.index');
+    Route::get('/tickets/{id}', [TicketController::class, 'show'])->name('tickets.show');
+    Route::post('/tickets/{id}/assign', [TicketController::class, 'assign'])->name('tickets.assign');
+    Route::delete('/tickets/{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
     // Manajemen Knowledge Base
     Route::get('/knowledge-base', [KnowledgeBaseController::class, 'index'])->name('knowledge-base.index');
-    Route::post('/knowledge-base/verify/{id}', [KnowledgeBaseController::class, 'verify'])->name('admin.kb.verify');
+    Route::post('/knowledge-base/verify/{id}', [KnowledgeBaseController::class, 'verify'])->name('kb.verify');
+});
+
+Route::middleware(['auth', 'role:teknisi'])->prefix('teknisi')->name('teknisi.')->group(function () {
+    // Dashboard Teknisi
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'teknisi'])->name('dashboard');
+    // Kelola Tugas (index & solve)
+    Route::get('/assignments', [App\Http\Controllers\AssignmentController::class, 'index'])->name('assignments.index');
+    Route::post('/assignments/{id}/solve', [App\Http\Controllers\AssignmentController::class, 'solve'])->name('assignments.solve');
+});
+Route::middleware(['auth', 'role:pelanggan'])->prefix('user')->name('user.')->group(function () {
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
+    // Route Tiket Pelanggan
+    Route::get('/tickets', [TicketController::class, 'pelanggan'])->name('tickets.index');
+    Route::get('/tickets/create', [TicketController::class, 'create_pelanggan'])->name('tickets.create');
+    Route::post('/tickets', [TicketController::class, 'store_pelanggan'])->name('tickets.store');
+
+    Route::post('/tickets/get-recommendation', [TicketController::class, 'getRecommendation'])->name('tickets.recommendation');
 });
 
 require __DIR__ . '/auth.php';

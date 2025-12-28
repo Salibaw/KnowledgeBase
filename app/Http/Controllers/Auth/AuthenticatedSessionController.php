@@ -29,7 +29,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        return redirect()->intended(RouteServiceProvider::HOME);
+        $role = Auth::user()->role; // langsung $user->role karena string
+
+        return redirect($this->redirectPathByRole($role));
     }
 
     /**
@@ -44,5 +46,16 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerateToken();
 
         return redirect('/');
+    }
+    protected function redirectPathByRole(string $role): string
+    {
+        switch ($role) {
+            case 'admin':
+                return route('admin.dashboard');
+            case 'teknisi':
+                return route('teknisi.dashboard');
+            default:
+                return route('pelanggan.dashboard');
+        }
     }
 }
