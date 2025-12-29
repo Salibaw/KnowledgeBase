@@ -25,7 +25,7 @@
             </div>
             
             <div class="flex items-center gap-6">
-                <a href="{{ route('login') }}" class="text-sm font-bold text-slate-600 hover:text-indigo-600 transition">Masuk</a>
+                <a href="{{ 'login' }}" class="text-sm font-bold text-slate-600 hover:text-indigo-600 transition">Masuk</a>
                 <a href="{{ route('register') }}" class="bg-indigo-500 text-white px-7 py-3 rounded-xl text-sm font-bold shadow-md hover:bg-indigo-600 transition">Mulai Sekarang</a>
             </div>
         </div>

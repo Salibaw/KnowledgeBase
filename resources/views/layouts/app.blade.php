@@ -101,13 +101,13 @@
 
                 @if(Auth::user()->role == 'pelanggan')
                 <div x-show="sidebarOpen" class="text-[10px] uppercase text-slate-500 font-bold px-4 pt-6 pb-2 tracking-widest">Support</div>
-                <a href="{{ route('tickets.create') }}"
+                <a href="{{ route('pelanggan.tickets.create') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tickets.create') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}"
                     :class="sidebarOpen ? '' : 'justify-center'">
                     <i class="fas fa-plus-circle w-6"></i>
                     <span x-show="sidebarOpen" x-transition.opacity class="ml-3">Buat Tiket</span>
                 </a>
-                <a href="{{ route('tickets.index') }}"
+                <a href="{{ route('pelanggan.tickets.index') }}"
                     class="flex items-center px-4 py-3 text-sm font-medium rounded-xl transition-all {{ request()->routeIs('tickets.index') ? 'bg-indigo-600 text-white shadow-lg' : 'text-slate-300 hover:bg-slate-700/50 hover:text-white' }}"
                     :class="sidebarOpen ? '' : 'justify-center'">
                     <i class="fas fa-list-ul w-6"></i>
@@ -167,10 +167,11 @@
                             <i class="fas fa-user-circle opacity-50"></i> Lihat Profil
                         </a>
 
-                        <form method="POST" action="{{ route('logout') }}">
+                        <form method="POST" action="{{ route('logout') }}" class="mt-1">
                             @csrf
-                            <button type="submit" class="text-sm text-gray-600 hover:text-gray-900 underline">
-                                Log out
+                            <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-50 transition-all font-medium border-t border-gray-50 mt-1">
+                                <i class="fas fa-sign-out-alt opacity-70"></i>
+                                Keluar Aplikasi
                             </button>
                         </form>
                     </div>

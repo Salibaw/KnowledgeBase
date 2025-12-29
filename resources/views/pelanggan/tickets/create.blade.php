@@ -36,7 +36,7 @@
                     </div>
 
                     <div class="pt-4 flex gap-3">
-                        <a href="{{ route('user.tickets.index') }}" class="flex-1 text-center py-4 rounded-2xl font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 transition">Batal</a>
+                        <a href="{{ route('pelanggan.tickets.index') }}" class="flex-1 text-center py-4 rounded-2xl font-bold text-slate-500 bg-slate-100 hover:bg-slate-200 transition">Batal</a>
                         <button type="submit" class="flex-[2] py-4 rounded-2xl font-bold text-white bg-indigo-600 shadow-lg shadow-indigo-100 hover:bg-indigo-700 transition">Kirim Laporan</button>
                     </div>
                 </form>
@@ -97,7 +97,7 @@
             const text = descriptionInput.value;
 
             if (text.length > 5) { // Mulai cari jika teks lebih dari 5 karakter
-                fetch("{{ route('user.tickets.recommendation') }}", {
+                fetch("{{ route('pelanggan.tickets.recommendation') }}", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",

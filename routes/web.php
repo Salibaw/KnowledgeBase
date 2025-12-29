@@ -59,7 +59,7 @@ Route::middleware(['auth', 'role:teknisi'])->prefix('teknisi')->name('teknisi.')
     Route::get('/assignments', [AssignmentController::class, 'index'])->name('assignments.index');
     Route::post('/assignments/{id}/solve', [AssignmentController::class, 'solve'])->name('assignments.solve');
 });
-Route::middleware(['auth', 'role:pelanggan'])->prefix('user')->name('user.')->group(function () {
+Route::middleware(['auth', 'role:pelanggan'])->prefix('pelanggan')->name('pelanggan.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     // Route Tiket Pelanggan
     Route::get('/tickets', [TicketController::class, 'pelanggan'])->name('tickets.index');

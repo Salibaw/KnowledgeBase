@@ -45,4 +45,24 @@ class DashboardController extends Controller
 
         return view('teknisi.dashboard', $data);
     }
+    public function index()
+    {
+        $userId = Auth::id();
+
+        $data = [
+            // Statistik Tiket Pelanggan
+            'total_tiket'   => Ticket::where('user_id', $userId)->count(),
+            'tiket_proses'  => Ticket::where('user_id', $userId)->where('status', 'processing')->count(),
+            'tiket_selesai' => Ticket::where('user_id', $userId)->where('status', 'resolved')->count(),
+            
+            // 5 Tiket Terbaru untuk Tabel
+            'recent_tickets' => Ticket::with('category')
+                                ->where('user_id', $userId)
+                                ->latest()
+                                ->take(5)
+                                ->get()
+        ];
+
+        return view('pelanggan.dashboard', $data);
+    }
 }

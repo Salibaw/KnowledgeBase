@@ -56,7 +56,7 @@ class TicketController extends Controller
 
     public function create_pelanggan()
     {
-        return view('user.tickets.create');
+        return view('pelanggan.tickets.create');
     }
 
     /**
