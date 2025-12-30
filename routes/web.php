@@ -49,6 +49,7 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::delete('/tickets/{id}', [TicketController::class, 'destroy'])->name('tickets.destroy');
     // Manajemen Knowledge Base
     Route::get('/knowledge-base', [KnowledgeBaseController::class, 'index'])->name('knowledge-base.index');
+    Route::delete('/knowledge-base/{id}', [KnowledgeBaseController::class, 'destroy'])->name('knowledge-base.destroy');
     Route::post('/knowledge-base/verify/{id}', [KnowledgeBaseController::class, 'verify'])->name('kb.verify');
 });
 

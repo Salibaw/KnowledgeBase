@@ -41,7 +41,7 @@
                                 </button>
                             </form>
                             @endif
-                            <form action="{{ route('admin.knowledge-base.destroy', $item->id) }}" method="POST" onsubmit="return confirm('Hapus data ini?')">
+                            <form action="{{ route('admin.knowledge-base.destroy', $item->kb_id) }}" method="POST" onsubmit="return confirm('Hapus data ini?')">
                                 @csrf @method('DELETE')
                                 <button type="submit" class="p-2 text-red-400 hover:text-red-600">
                                     <i class="fas fa-trash"></i>
